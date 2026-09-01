@@ -21,7 +21,7 @@ const ORG_TYPES = [
   "Office / corporate",
   "Non-profit organisation",
   "Other",
-];
+] as const;
 
 const SERVICES = [
   "Free IT Risk Assessment",
@@ -30,11 +30,15 @@ const SERVICES = [
   "Cybersecurity & backups",
   "Network & Wi-Fi",
   "Consultation",
-];
+] as const;
+
+type Status = { kind: "success" | "error"; message: string } | null;
 
 export function Booking() {
-  const [orgType, setOrgType] = useState(ORG_TYPES[0]);
-  const [service, setService] = useState(SERVICES[0]);
+  const [orgType, setOrgType] = useState<string>(ORG_TYPES[0]);
+  const [service, setService] = useState<string>(SERVICES[0]);
+  const [status, setStatus] = useState<Status>(null);
+
 
   const buildMessage = (form: HTMLFormElement) => {
     const data = new FormData(form);
@@ -52,18 +56,42 @@ export function Booking() {
 
   const onWhatsApp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    window.open(whatsappUrl(buildMessage(e.currentTarget)), "_blank", "noopener,noreferrer");
+    const win = window.open(
+      whatsappUrl(buildMessage(e.currentTarget)),
+      "_blank",
+      "noopener,noreferrer",
+    );
+    if (win) {
+      setStatus({
+        kind: "success",
+        message: "WhatsApp is opening with your enquiry — press send and we'll reply shortly.",
+      });
+    } else {
+      setStatus({
+        kind: "error",
+        message:
+          "We couldn't open WhatsApp (your browser may have blocked the pop-up). Please allow pop-ups or WhatsApp us on 067 867 7830.",
+      });
+    }
   };
 
   const onEmail = (e: FormEvent<HTMLButtonElement>) => {
     const form = e.currentTarget.form;
     if (!form) return;
-    if (!form.reportValidity()) return;
+    if (!form.reportValidity()) {
+      setStatus({ kind: "error", message: "Please complete the required fields marked with *." });
+      return;
+    }
     e.preventDefault();
     const subject = encodeURIComponent(`IT enquiry — ${service}`);
     const body = encodeURIComponent(buildMessage(form));
     window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    setStatus({
+      kind: "success",
+      message: `Your email app is opening with your enquiry — press send, or write to us at ${EMAIL}.`,
+    });
   };
+
 
   return (
     <section id="booking" className="relative py-20 lg:py-28">

@@ -27,7 +27,7 @@ const services = [
       "IT guidance",
     ],
     cta: "Learn More",
-    section: "packages",
+    section: "pricing",
   },
   {
     icon: LifeBuoy,
