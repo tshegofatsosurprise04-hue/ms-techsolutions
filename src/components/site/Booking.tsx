@@ -21,7 +21,7 @@ const ORG_TYPES = [
   "Office / corporate",
   "Non-profit organisation",
   "Other",
-];
+] as const;
 
 const SERVICES = [
   "Free IT Risk Assessment",
@@ -30,11 +30,15 @@ const SERVICES = [
   "Cybersecurity & backups",
   "Network & Wi-Fi",
   "Consultation",
-];
+] as const;
+
+type Status = { kind: "success" | "error"; message: string } | null;
 
 export function Booking() {
-  const [orgType, setOrgType] = useState(ORG_TYPES[0]);
-  const [service, setService] = useState(SERVICES[0]);
+  const [orgType, setOrgType] = useState<string>(ORG_TYPES[0]);
+  const [service, setService] = useState<string>(SERVICES[0]);
+  const [status, setStatus] = useState<Status>(null);
+
 
   const buildMessage = (form: HTMLFormElement) => {
     const data = new FormData(form);
