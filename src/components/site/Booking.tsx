@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { CalendarCheck, MessageCircle, Send } from "lucide-react";
+import { AlertTriangle, CalendarCheck, CheckCircle2, MessageCircle, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EMAIL, whatsappUrl } from "@/config/site";
+import { EMAIL, WHATSAPP_URL, whatsappUrl } from "@/config/site";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
