@@ -188,6 +188,36 @@ export function Booking() {
                 </Button>
               </div>
 
+              <div aria-live="polite" role="status">
+                {status && (
+                  <div
+                    className={
+                      status.kind === "success"
+                        ? "rounded-xl border border-whatsapp/40 bg-whatsapp/10 p-4"
+                        : "rounded-xl border border-destructive/40 bg-destructive/10 p-4"
+                    }
+                  >
+                    <p className="flex items-start gap-2 font-display text-sm font-bold text-foreground">
+                      {status.kind === "success" ? (
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-whatsapp" aria-hidden="true" />
+                      ) : (
+                        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" aria-hidden="true" />
+                      )}
+                      {status.title}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {status.message}
+                    </p>
+                    <Button asChild variant="whatsapp" size="sm" className="mt-4 w-full sm:w-auto">
+                      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                        <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                        <span className="truncate">Chat with MS-TECH on WhatsApp</span>
+                      </a>
+                    </Button>
+                  </div>
+                )}
+              </div>
+
               <p className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
                 <CalendarCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary-glow" aria-hidden="true" />
                 We usually respond within one business day. Your details are only used to contact
