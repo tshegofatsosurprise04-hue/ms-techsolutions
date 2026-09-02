@@ -59,12 +59,15 @@ export function Booking() {
 
   const onWhatsApp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const win = window.open(
-      whatsappUrl(buildMessage(e.currentTarget)),
-      "_blank",
-      "noopener,noreferrer",
-    );
+    // NOTE: "noopener" makes window.open() return null, so we clear the opener manually
+    // and use the returned reference to detect pop-up blocking.
+    const win = window.open(whatsappUrl(buildMessage(e.currentTarget)), "_blank");
     if (win) {
+      try {
+        win.opener = null;
+      } catch {
+        /* cross-origin — safe to ignore */
+      }
       setStatus({
         kind: "success",
         title: "Request received successfully.",
@@ -79,6 +82,7 @@ export function Booking() {
       });
     }
   };
+
 
   const onEmail = (e: FormEvent<HTMLButtonElement>) => {
     const form = e.currentTarget.form;
