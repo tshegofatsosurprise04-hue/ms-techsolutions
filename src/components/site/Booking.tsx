@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { CalendarCheck, MessageCircle, Send } from "lucide-react";
+import { AlertTriangle, CalendarCheck, CheckCircle2, MessageCircle, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EMAIL, whatsappUrl } from "@/config/site";
+import { EMAIL, WHATSAPP_URL, whatsappUrl } from "@/config/site";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
@@ -32,7 +32,10 @@ const SERVICES = [
   "Consultation",
 ] as const;
 
-type Status = { kind: "success" | "error"; message: string } | null;
+type Status = { kind: "success" | "error"; title: string; message: string } | null;
+
+const ERROR_MESSAGE =
+  "We couldn't submit your request. Please try again or contact MS-TECH Solutions directly on WhatsApp.";
 
 export function Booking() {
   const [orgType, setOrgType] = useState<string>(ORG_TYPES[0]);
@@ -56,30 +59,40 @@ export function Booking() {
 
   const onWhatsApp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const win = window.open(
-      whatsappUrl(buildMessage(e.currentTarget)),
-      "_blank",
-      "noopener,noreferrer",
-    );
+    // NOTE: "noopener" makes window.open() return null, so we clear the opener manually
+    // and use the returned reference to detect pop-up blocking.
+    const win = window.open(whatsappUrl(buildMessage(e.currentTarget)), "_blank");
     if (win) {
+      try {
+        win.opener = null;
+      } catch {
+        /* cross-origin — safe to ignore */
+      }
       setStatus({
         kind: "success",
-        message: "WhatsApp is opening with your enquiry — press send and we'll reply shortly.",
+        title: "Request received successfully.",
+        message:
+          "Thank you for contacting MS-TECH Solutions. We will contact you to confirm your FREE IT Risk Assessment. WhatsApp is opening with your enquiry — please press send.",
       });
     } else {
       setStatus({
         kind: "error",
-        message:
-          "We couldn't open WhatsApp (your browser may have blocked the pop-up). Please allow pop-ups or WhatsApp us on 067 867 7830.",
+        title: "We couldn't open WhatsApp.",
+        message: ERROR_MESSAGE,
       });
     }
   };
+
 
   const onEmail = (e: FormEvent<HTMLButtonElement>) => {
     const form = e.currentTarget.form;
     if (!form) return;
     if (!form.reportValidity()) {
-      setStatus({ kind: "error", message: "Please complete the required fields marked with *." });
+      setStatus({
+        kind: "error",
+        title: "Some details are missing.",
+        message: "Please complete the required fields marked with *.",
+      });
       return;
     }
     e.preventDefault();
@@ -88,7 +101,8 @@ export function Booking() {
     window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
     setStatus({
       kind: "success",
-      message: `Your email app is opening with your enquiry — press send, or write to us at ${EMAIL}.`,
+      title: "Request received successfully.",
+      message: `Thank you for contacting MS-TECH Solutions. We will contact you to confirm your FREE IT Risk Assessment. Your email app is opening with your enquiry — please press send, or write to us at ${EMAIL}.`,
     });
   };
 
@@ -176,6 +190,36 @@ export function Booking() {
                   <Send className="h-4 w-4" aria-hidden="true" />
                   Send via Email
                 </Button>
+              </div>
+
+              <div aria-live="polite" role="status">
+                {status && (
+                  <div
+                    className={
+                      status.kind === "success"
+                        ? "rounded-xl border border-whatsapp/40 bg-whatsapp/10 p-4"
+                        : "rounded-xl border border-destructive/40 bg-destructive/10 p-4"
+                    }
+                  >
+                    <p className="flex items-start gap-2 font-display text-sm font-bold text-foreground">
+                      {status.kind === "success" ? (
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-whatsapp" aria-hidden="true" />
+                      ) : (
+                        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" aria-hidden="true" />
+                      )}
+                      {status.title}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {status.message}
+                    </p>
+                    <Button asChild variant="whatsapp" size="sm" className="mt-4 w-full sm:w-auto">
+                      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                        <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                        <span className="truncate">Chat with MS-TECH on WhatsApp</span>
+                      </a>
+                    </Button>
+                  </div>
+                )}
               </div>
 
               <p className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
