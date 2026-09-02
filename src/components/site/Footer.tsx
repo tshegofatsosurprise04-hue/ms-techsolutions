@@ -106,6 +106,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link to="/terms" className="transition-colors hover:text-foreground">
+                Terms &amp; Conditions
+              </Link>
+            </li>
+            <li>
               <SectionLink section="contact" className="transition-colors hover:text-foreground">
                 Contact
               </SectionLink>
