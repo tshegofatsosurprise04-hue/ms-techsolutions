@@ -32,7 +32,10 @@ const SERVICES = [
   "Consultation",
 ] as const;
 
-type Status = { kind: "success" | "error"; message: string } | null;
+type Status = { kind: "success" | "error"; title: string; message: string } | null;
+
+const ERROR_MESSAGE =
+  "We couldn't submit your request. Please try again or contact MS-TECH Solutions directly on WhatsApp.";
 
 export function Booking() {
   const [orgType, setOrgType] = useState<string>(ORG_TYPES[0]);
@@ -64,13 +67,15 @@ export function Booking() {
     if (win) {
       setStatus({
         kind: "success",
-        message: "WhatsApp is opening with your enquiry — press send and we'll reply shortly.",
+        title: "Request received successfully.",
+        message:
+          "Thank you for contacting MS-TECH Solutions. We will contact you to confirm your FREE IT Risk Assessment. WhatsApp is opening with your enquiry — please press send.",
       });
     } else {
       setStatus({
         kind: "error",
-        message:
-          "We couldn't open WhatsApp (your browser may have blocked the pop-up). Please allow pop-ups or WhatsApp us on 067 867 7830.",
+        title: "We couldn't open WhatsApp.",
+        message: ERROR_MESSAGE,
       });
     }
   };
@@ -79,7 +84,11 @@ export function Booking() {
     const form = e.currentTarget.form;
     if (!form) return;
     if (!form.reportValidity()) {
-      setStatus({ kind: "error", message: "Please complete the required fields marked with *." });
+      setStatus({
+        kind: "error",
+        title: "Some details are missing.",
+        message: "Please complete the required fields marked with *.",
+      });
       return;
     }
     e.preventDefault();
@@ -88,7 +97,8 @@ export function Booking() {
     window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
     setStatus({
       kind: "success",
-      message: `Your email app is opening with your enquiry — press send, or write to us at ${EMAIL}.`,
+      title: "Request received successfully.",
+      message: `Thank you for contacting MS-TECH Solutions. We will contact you to confirm your FREE IT Risk Assessment. Your email app is opening with your enquiry — please press send, or write to us at ${EMAIL}.`,
     });
   };
 
