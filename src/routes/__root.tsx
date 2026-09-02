@@ -77,14 +77,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "MS-TECH Solutions | Professional IT Support & Services" },
+      {
+        name: "description",
+        content:
+          "MS-TECH Solutions provides professional IT support, cybersecurity, network support, backup management and IT risk assessments for schools and organisations in South Africa.",
+      },
+      { name: "author", content: "MS-TECH Solutions" },
+      { property: "og:title", content: "MS-TECH Solutions | Professional IT Support & Services" },
+      {
+        property: "og:description",
+        content:
+          "MS-TECH Solutions provides professional IT support, cybersecurity, network support, backup management and IT risk assessments for schools and organisations in South Africa.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "MS-TECH Solutions" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
