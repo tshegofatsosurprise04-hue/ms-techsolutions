@@ -25,10 +25,8 @@ export function whatsappUrl(message: string = DEFAULT_WHATSAPP_MESSAGE) {
 
 export const WHATSAPP_URL = whatsappUrl();
 
-/** TODO (owner): replace with the real profile URL, e.g. "https://instagram.com/yourhandle" */
-export const INSTAGRAM_URL = "";
-/** TODO (owner): replace with the real profile URL, e.g. "https://x.com/yourhandle" */
-export const X_URL = "";
+export const INSTAGRAM_URL = "https://www.instagram.com/mstech305";
+export const X_URL = "https://x.com/mstech305";
 
 /**
  * Resource downloads.
