@@ -35,8 +35,16 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Create 404 fallback
-        run: cp dist/index.html dist/404.html
+      - name: Create index fallback
+        run: |
+          if [ -d ".output/public" ]; then
+            cd .output/public
+            first_html=$(find . -name "*.html" | head -n 1)
+            if [ -n "$first_html" ] && [ ! -f "index.html" ]; then
+              cp "$first_html" index.html
+            fi
+            cp index.html 404.html || true
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -44,7 +52,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: '.output/public'
 
       - name: Deploy to GitHub Pages
         id: deployment
