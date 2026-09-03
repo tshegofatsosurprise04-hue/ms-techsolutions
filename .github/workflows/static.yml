@@ -27,13 +27,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build project
-        run: PRERENDER=true npm run build
+        run: npm run build
+
+      - name: Copy 404 to index.html fallback
+        run: |
+          if [ -d ".output/public" ]; then
+            cp .output/public/index.html .output/public/404.html || true
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
