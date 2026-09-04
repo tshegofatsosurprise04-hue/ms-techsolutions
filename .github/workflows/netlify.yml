@@ -26,13 +26,8 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build
-        env:
-          NITRO_PRESET: netlify
-        run: bun run build
-
-      - name: Deploy to Netlify
+      - name: Build and deploy to Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: bunx netlify-cli@latest deploy --build=false --prod --dir=dist --message "Deploy ${{ github.sha }}"
+        run: bunx netlify-cli@latest deploy --build --prod --message "Deploy ${{ github.sha }}"
