@@ -20,10 +20,10 @@ import { FloatingWhatsAppButton } from "@/components/site/FloatingWhatsAppButton
 import { StickyMobileCta } from "@/components/site/StickyMobileCta";
 import { COMPANY_NAME, EMAIL, PHONE_E164 } from "@/config/site";
 
-const SITE_URL = "https://ms-techsolutions.lovable.app";
-const TITLE = "MS-TECH Solutions | Professional IT Support & Services";
+const SITE_URL = "https://mstechsolutions.co.za";
+const TITLE = "MS-TECH Solutions | IT Support for Schools and Organizations in South Africa";
 const DESCRIPTION =
-  "MS-TECH Solutions provides professional IT support, cybersecurity, network support, backup management and IT risk assessments for schools and organisations in South Africa.";
+  "Reliable IT Support in South Africa. We fix downtime, setup networks, Office 365, cybersecurity. Call MS-TECH for fast IT help.";
 
 const localBusinessLd = {
   "@context": "https://schema.org",
