@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import logoAsset from "@/assets/mstech-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 
 type LogoProps = {
@@ -22,7 +21,7 @@ const markSizes = {
 export function LogoMark({ className, size = "md" }: Omit<LogoProps, "markOnly">) {
   return (
     <img
-      src={logoAsset.url}
+      src="/logo.png"
       alt="MS-TECH Solutions logo"
       width={128}
       height={128}
