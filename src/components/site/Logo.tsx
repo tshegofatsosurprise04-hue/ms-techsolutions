@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import logoAsset from "@/assets/mstech-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 
 type LogoProps = {
