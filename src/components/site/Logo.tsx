@@ -21,7 +21,7 @@ const markSizes = {
 export function LogoMark({ className, size = "md" }: Omit<LogoProps, "markOnly">) {
   return (
     <img
-      src={logoAsset.url}
+      src="/logo.png"
       alt="MS-TECH Solutions logo"
       width={128}
       height={128}
