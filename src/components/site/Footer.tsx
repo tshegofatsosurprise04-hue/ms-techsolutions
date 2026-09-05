@@ -2,16 +2,16 @@ import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { COMPANY_NAME, EMAIL, PHONE_DISPLAY, PHONE_E164, SERVICE_AREA } from "@/config/site";
 import { Logo } from "./Logo";
-import { NAV_SECTIONS, SectionLink } from "./SectionLink";
+import { NAV_LINKS, type AppRoute } from "./SectionLink";
 import { SocialLinks } from "./SocialLinks";
 
-const SERVICE_LINKS = [
-  { label: "Managed IT Support", section: "services" },
-  { label: "On-Demand IT Support", section: "services" },
-  { label: "Cybersecurity", section: "services" },
-  { label: "Backup & Data Protection", section: "services" },
-  { label: "Network & Infrastructure", section: "services" },
-  { label: "Free IT Risk Assessment", section: "assessment" },
+const SERVICE_LINKS: { label: string; to: AppRoute }[] = [
+  { label: "Managed IT Support", to: "/services" },
+  { label: "On-Demand IT Support", to: "/services" },
+  { label: "Cybersecurity", to: "/services" },
+  { label: "Backup & Data Protection", to: "/services" },
+  { label: "Network & Infrastructure", to: "/services" },
+  { label: "Free IT Risk Assessment", to: "/risk-assessment" },
 ];
 
 export function Footer() {
@@ -33,14 +33,14 @@ export function Footer() {
               Navigation
             </h2>
             <ul className="mt-4 space-y-2.5">
-              {NAV_SECTIONS.map((item) => (
+              {NAV_LINKS.map((item) => (
                 <li key={item.label}>
-                  <SectionLink
-                    section={item.section}
+                  <Link
+                    to={item.to}
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.label}
-                  </SectionLink>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -53,12 +53,12 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               {SERVICE_LINKS.map((item) => (
                 <li key={item.label}>
-                  <SectionLink
-                    section={item.section}
+                  <Link
+                    to={item.to}
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.label}
-                  </SectionLink>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -111,9 +111,9 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <SectionLink section="contact" className="transition-colors hover:text-foreground">
+              <Link to="/contact" className="transition-colors hover:text-foreground">
                 Contact
-              </SectionLink>
+              </Link>
             </li>
           </ul>
         </div>
