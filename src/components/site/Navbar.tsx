@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PHONE_DISPLAY, PHONE_E164 } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
-import { NAV_SECTIONS, SectionLink } from "./SectionLink";
+import { NAV_LINKS } from "./SectionLink";
 import { SocialLinks } from "./SocialLinks";
 
 export function Navbar() {
@@ -42,14 +43,16 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <ul className="hidden items-center gap-1 xl:flex">
-            {NAV_SECTIONS.map((item) => (
+            {NAV_LINKS.map((item) => (
               <li key={item.label}>
-                <SectionLink
-                  section={item.section}
+                <Link
+                  to={item.to}
+                  activeOptions={{ exact: item.to === "/" }}
+                  activeProps={{ className: "text-foreground" }}
                   className="rounded-md px-3 py-2 text-[0.82rem] font-semibold text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {item.label}
-                </SectionLink>
+                </Link>
               </li>
             ))}
           </ul>
@@ -63,7 +66,7 @@ export function Navbar() {
           </a>
 
           <Button asChild variant="cta" size="sm" className="hidden md:inline-flex">
-            <SectionLink section="booking">Book Free Assessment</SectionLink>
+            <Link to="/risk-assessment">Book Free Assessment</Link>
           </Button>
 
           <button
@@ -85,21 +88,23 @@ export function Navbar() {
           className="max-h-[calc(100vh-6rem)] overflow-y-auto border-t border-border bg-background/98 backdrop-blur-xl xl:hidden"
         >
           <div className="container-page space-y-1 py-4">
-            {NAV_SECTIONS.map((item) => (
-              <SectionLink
+            {NAV_LINKS.map((item) => (
+              <Link
                 key={item.label}
-                section={item.section}
+                to={item.to}
                 onClick={() => setOpen(false)}
+                activeOptions={{ exact: item.to === "/" }}
+                activeProps={{ className: "text-foreground" }}
                 className="block rounded-lg px-3 py-3 text-sm font-semibold text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
               >
                 {item.label}
-              </SectionLink>
+              </Link>
             ))}
 
             <Button asChild variant="cta" size="lg" className="mt-3 w-full">
-              <SectionLink section="booking" onClick={() => setOpen(false)}>
+              <Link to="/risk-assessment" onClick={() => setOpen(false)}>
                 Book Free Assessment
-              </SectionLink>
+              </Link>
             </Button>
 
             <div className="flex items-center justify-between gap-3 pt-4">
