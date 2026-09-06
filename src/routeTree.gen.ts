@@ -11,6 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RiskAssessmentRouteImport } from './routes/risk-assessment'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as TermsRouteImport } from './routes/terms'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +26,21 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RiskAssessmentRoute = RiskAssessmentRouteImport.update({
+  id: '/risk-assessment',
+  path: '/risk-assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsRoute = SolutionsRouteImport.update({
+  id: '/solutions',
+  path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -32,30 +50,61 @@ const TermsRoute = TermsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/risk-assessment': typeof RiskAssessmentRoute
+  '/services': typeof ServicesRoute
+  '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/risk-assessment': typeof RiskAssessmentRoute
+  '/services': typeof ServicesRoute
+  '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/risk-assessment': typeof RiskAssessmentRoute
+  '/services': typeof ServicesRoute
+  '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/terms'
+  fullPaths:
+    | '/'
+    | '/privacy'
+    | '/risk-assessment'
+    | '/services'
+    | '/solutions'
+    | '/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/terms'
-  id: '__root__' | '/' | '/privacy' | '/terms'
+  to:
+    | '/'
+    | '/privacy'
+    | '/risk-assessment'
+    | '/services'
+    | '/solutions'
+    | '/terms'
+  id:
+    | '__root__'
+    | '/'
+    | '/privacy'
+    | '/risk-assessment'
+    | '/services'
+    | '/solutions'
+    | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PrivacyRoute: typeof PrivacyRoute
+  RiskAssessmentRoute: typeof RiskAssessmentRoute
+  ServicesRoute: typeof ServicesRoute
+  SolutionsRoute: typeof SolutionsRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -75,6 +124,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/risk-assessment': {
+      id: '/risk-assessment'
+      path: '/risk-assessment'
+      fullPath: '/risk-assessment'
+      preLoaderRoute: typeof RiskAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions': {
+      id: '/solutions'
+      path: '/solutions'
+      fullPath: '/solutions'
+      preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -88,6 +158,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivacyRoute: PrivacyRoute,
+  RiskAssessmentRoute: RiskAssessmentRoute,
+  ServicesRoute: ServicesRoute,
+  SolutionsRoute: SolutionsRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
