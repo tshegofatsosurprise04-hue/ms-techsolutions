@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RiskAssessmentRouteImport } from './routes/risk-assessment'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RiskAssessmentRoute = RiskAssessmentRouteImport.update({
+  id: '/risk-assessment',
+  path: '/risk-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -44,6 +50,7 @@ const TermsRoute = TermsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
@@ -59,21 +67,42 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/services' | '/solutions' | '/terms'
+  fullPaths:
+    | '/'
+    | '/privacy'
+    | '/risk-assessment'
+    | '/services'
+    | '/solutions'
+    | '/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/services' | '/solutions' | '/terms'
-  id: '__root__' | '/' | '/privacy' | '/services' | '/solutions' | '/terms'
+  to:
+    | '/'
+    | '/privacy'
+    | '/risk-assessment'
+    | '/services'
+    | '/solutions'
+    | '/terms'
+  id:
+    | '__root__'
+    | '/'
+    | '/privacy'
+    | '/risk-assessment'
+    | '/services'
+    | '/solutions'
+    | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PrivacyRoute: typeof PrivacyRoute
+  RiskAssessmentRoute: typeof RiskAssessmentRoute
   ServicesRoute: typeof ServicesRoute
   SolutionsRoute: typeof SolutionsRoute
   TermsRoute: typeof TermsRoute
@@ -93,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/risk-assessment': {
+      id: '/risk-assessment'
+      path: '/risk-assessment'
+      fullPath: '/risk-assessment'
+      preLoaderRoute: typeof RiskAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -122,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivacyRoute: PrivacyRoute,
+  RiskAssessmentRoute: RiskAssessmentRoute,
   ServicesRoute: ServicesRoute,
   SolutionsRoute: SolutionsRoute,
   TermsRoute: TermsRoute,
