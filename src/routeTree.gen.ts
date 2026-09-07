@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as RiskAssessmentRouteImport } from './routes/risk-assessment'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SolutionsRouteImport } from './routes/solutions'
@@ -30,6 +31,11 @@ const AboutRoute = AboutRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RiskAssessmentRoute = RiskAssessmentRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/privacy': typeof PrivacyRoute
+  '/resources': typeof ResourcesRoute
   '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/privacy': typeof PrivacyRoute
+  '/resources': typeof ResourcesRoute
   '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/privacy': typeof PrivacyRoute
+  '/resources': typeof ResourcesRoute
   '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/privacy'
+    | '/resources'
     | '/risk-assessment'
     | '/services'
     | '/solutions'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/privacy'
+    | '/resources'
     | '/risk-assessment'
     | '/services'
     | '/solutions'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/privacy'
+    | '/resources'
     | '/risk-assessment'
     | '/services'
     | '/solutions'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   PrivacyRoute: typeof PrivacyRoute
+  ResourcesRoute: typeof ResourcesRoute
   RiskAssessmentRoute: typeof RiskAssessmentRoute
   ServicesRoute: typeof ServicesRoute
   SolutionsRoute: typeof SolutionsRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/risk-assessment': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   PrivacyRoute: PrivacyRoute,
+  ResourcesRoute: ResourcesRoute,
   RiskAssessmentRoute: RiskAssessmentRoute,
   ServicesRoute: ServicesRoute,
   SolutionsRoute: SolutionsRoute,
