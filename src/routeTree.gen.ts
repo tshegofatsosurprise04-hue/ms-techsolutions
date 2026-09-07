@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RiskAssessmentRouteImport } from './routes/risk-assessment'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -19,6 +20,11 @@ import { Route as TermsRouteImport } from './routes/terms'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -49,6 +55,7 @@ const TermsRoute = TermsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/privacy': typeof PrivacyRoute
   '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/privacy': typeof PrivacyRoute
   '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/privacy': typeof PrivacyRoute
   '/risk-assessment': typeof RiskAssessmentRoute
   '/services': typeof ServicesRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/privacy'
     | '/risk-assessment'
     | '/services'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/privacy'
     | '/risk-assessment'
     | '/services'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/privacy'
     | '/risk-assessment'
     | '/services'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   PrivacyRoute: typeof PrivacyRoute
   RiskAssessmentRoute: typeof RiskAssessmentRoute
   ServicesRoute: typeof ServicesRoute
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   PrivacyRoute: PrivacyRoute,
   RiskAssessmentRoute: RiskAssessmentRoute,
   ServicesRoute: ServicesRoute,
